@@ -1,4 +1,5 @@
 import { startOfHour } from 'date-fns';
+import { inject, injectable } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
@@ -10,9 +11,11 @@ interface IRequestDTO {
   provider_id: string;
 }
 
+@injectable()
 class CreateAppointmentService {
   constructor(
     // o typescript tem um hackzinho que permite vc criar uma constante privada desse jeito
+    @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
   ) {}
 

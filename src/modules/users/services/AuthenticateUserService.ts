@@ -2,6 +2,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
+import { inject, injectable } from 'tsyringe';
 
 import User from '../infra/typeorm/entities/User';
 import IUsersRepository from '../repositories/IUsersRepository';
@@ -15,10 +16,11 @@ interface IResponse {
   user: User;
   token: string;
 }
-
+@injectable()
 class AuthenticateUserService {
   constructor(
     // o typescript tem um hackzinho que permite vc criar uma constante privada desse jeito
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository,
   ) {}
 

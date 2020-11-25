@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import uploadConfig from '@config/upload';
+import { inject, injectable } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
@@ -12,9 +13,11 @@ interface IRequest {
   avatarFileName: string;
 }
 
+@injectable()
 class UpdateUserAvatarService {
   constructor(
     // o typescript tem um hackzinho que permite vc criar uma constante privada desse jeito
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository,
   ) {}
 

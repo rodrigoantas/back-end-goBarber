@@ -1,5 +1,6 @@
 import { hash } from 'bcryptjs';
 import AppError from '@shared/errors/AppError';
+import { inject, injectable } from 'tsyringe';
 
 import User from '../infra/typeorm/entities/User';
 import IUsersRepository from '../repositories/IUsersRepository';
@@ -10,9 +11,11 @@ interface IRequest {
   password: string;
 }
 
+@injectable()
 class CreateUserService {
   constructor(
     // o typescript tem um hackzinho que permite vc criar uma constante privada desse jeito
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository,
   ) {}
 

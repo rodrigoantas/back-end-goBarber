@@ -22,6 +22,13 @@ class Appointment {
   @JoinColumn({ name: 'provider_id' })
   provider: User;
 
+  @Column()
+  user_id: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
+
   @Column('timestamp with time zone')
   date: Date;
 
@@ -30,13 +37,6 @@ class Appointment {
 
   @UpdateDateColumn()
   updated_at: Date;
-
-  // não precisa mais desse constructor, quando se cria uma entidade com typeorm, o constructor é meio que criado de forma automática, não vamos mais criar o model da maneira tradicional com New Appointment.
-  // constructor({ provider, date }: Omit<Appointment, 'id'>) {
-  //   this.id = uuid();
-  //   this.provider = provider;
-  //   this.date = date;
-  // }
 }
 
 export default Appointment;

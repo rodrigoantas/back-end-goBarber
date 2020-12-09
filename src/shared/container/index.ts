@@ -15,7 +15,7 @@ import UserTokensRepository from '@modules/users/infra/typeorm/repositories/User
 // register cria um repositorio novo toda vez, o registersingleton ele instancia essa classe apenas uma vez durante todo o ciclo de vida da aplicação, ou seja os proximos services que precisarem de appointmentsrepository, vai usar o mesmo.
 
 container.registerSingleton<IAppointmentsRepository>(
-  'AppoitmentsRepository',
+  'AppointmentsRepository',
   AppointmentsRepository,
 );
 

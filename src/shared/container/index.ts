@@ -12,6 +12,9 @@ import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepo
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
+import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
+import NotificationsRepository from '@modules/notifications/infra/typeorm/repositories/NotificationsRepository';
+
 // register cria um repositorio novo toda vez, o registersingleton ele instancia essa classe apenas uma vez durante todo o ciclo de vida da aplicação, ou seja os proximos services que precisarem de appointmentsrepository, vai usar o mesmo.
 
 container.registerSingleton<IAppointmentsRepository>(
@@ -27,4 +30,9 @@ container.registerSingleton<IUserRepository>(
 container.registerSingleton<IUserTokensRepository>(
   'UserTokensRepository',
   UserTokensRepository,
+);
+
+container.registerSingleton<INotificationsRepository>(
+  'NotificationsRepository',
+  NotificationsRepository,
 );

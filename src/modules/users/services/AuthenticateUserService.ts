@@ -43,6 +43,7 @@ class AuthenticateUserService {
     // password = senha não criptografada
     // user.password = senha criptografada
     const { secret, expiresIn } = authConfig.jwt;
+
     const token = sign({}, secret, {
       subject: user.id,
       expiresIn,

@@ -1,9 +1,8 @@
-import { inject, injectable } from 'tsyringe';
+import { injectable, inject } from 'tsyringe';
 import path from 'path';
 
-// import User from '../infra/typeorm/entities/User';
-import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import AppError from '@shared/errors/AppError';
+import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
 
@@ -28,16 +27,17 @@ class SendForgotPasswordEmailService {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
-      throw new AppError('User does not exists');
+      throw new AppError('User does not exists.');
     }
+
+    const { token } = await this.userTokensRepository.generate(user.id);
+
     const forgotPasswordTemplate = path.resolve(
       __dirname,
       '..',
       'views',
       'forgot_password.hbs',
     );
-
-    const { token } = await this.userTokensRepository.generate(user.id);
 
     await this.mailProvider.sendMail({
       to: {
@@ -49,7 +49,7 @@ class SendForgotPasswordEmailService {
         file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          link: `${process.env.APP_WEB_URL}reset_password?token=${token}`,
+          link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
         },
       },
     });

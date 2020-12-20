@@ -79,6 +79,8 @@ class CreateAppointmentService {
       )}`,
     );
 
+    console.log(appointmentDate);
+
     return appointment;
   }
 }
